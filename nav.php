@@ -1,13 +1,17 @@
 <nav>
-    <a href="#"><img class="logo" src="./img/placeholder.png" alt="Image placeholder"></a>
-    <div class="navigation">
-        <a href="#"><button class="nav-button">Accueil</button></a>
-        <a href="#"><button class="nav-button">Nos produits</button></a>
-        <a href="#"><button class="nav-button">Historique</button></a>
-        <a href="#"><button class="nav-button">Mes locations</button></a>
-        <a href="#"><button class="nav-button">Contact</button></a>
-    </div>
-    <a href="#"><button class="nav-log">Se connecter</button></a>
+    <a href="#" class="nav-logo">
+        <img class="logo" src="./img/placeholder.png" alt="Locfit">
+    </a>
+
+    <ul class="navigation">
+        <li><a href="#" class="nav-button active">Accueil</a></li>
+        <li><a href="#" class="nav-button">Nos produits</a></li>
+        <li><a href="#" class="nav-button">Historique</a></li>
+        <li><a href="#" class="nav-button">Mes locations</a></li>
+        <li><a href="#" class="nav-button">Contact</a></li>
+    </ul>
+
+    <a href="#" class="nav-log">Se connecter</a>
 </nav>
 
 <main>
