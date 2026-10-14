@@ -6,7 +6,7 @@
 
 <div class="accueil-title">
     <h1>Explorez notre sélection</h1>
-    <a href="#">Voir plus</a>
+    <a href="./catalogue.php">Voir plus</a>
 </div>
 
 <div class="cards">
