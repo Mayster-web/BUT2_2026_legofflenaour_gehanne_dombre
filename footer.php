@@ -62,3 +62,6 @@
         <p>© 2026 Locfit Inc. Tous droits réservés</p>
     </div>
 </footer>
+
+</body>
+</html>

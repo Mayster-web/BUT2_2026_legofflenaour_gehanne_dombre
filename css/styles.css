@@ -24,6 +24,7 @@ a {
 main {
     flex: 1;
     padding-top: 100px;
+    margin-inline: 5rem;
 }
 
 button {
@@ -76,6 +77,36 @@ nav .nav-log {
 
 .logo {
     width: 100px;
+}
+
+.accueil {
+    display: block;
+    width: 100vw;
+    max-width: none;
+    height: clamp(180px, 25vw, 320px);
+    margin-left: calc(50% - 50vw);
+    object-fit: cover;
+    object-position: center 10%;
+    margin-bottom: 1rem;
+}
+
+.accueil-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.accueil-title a {
+    background-color: lightgrey;
+    color: black;
+    padding: 0.8rem;
+    border-radius: 1rem;
+}
+
+.accueil-title a:hover {
+    background-color: grey;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 1rem;
 }
 
 footer {
@@ -183,18 +214,30 @@ footer p {
     font-size: 0.8rem;
 }
 
-
-img {
+.cards {
     max-width: 100%;
+    margin: 1em auto;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-gap: 20px;
 }
 
-.cards {
-    max-width: 700px;
-    margin: 1em auto;
+@media (max-width: 1100px) {
+    .cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    grid-gap: 20px;
+@media (max-width: 700px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 450px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
 }
 
 .card {
@@ -208,7 +251,7 @@ img {
     height: 100%;
 }
 
-.card h2 {
+.card h3 {
     margin: 0;
     padding: 0.5rem;
 }
