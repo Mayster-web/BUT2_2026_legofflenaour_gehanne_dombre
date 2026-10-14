@@ -16,7 +16,7 @@
         <div class="content">
             <p>Texte de test quoi</p>
         </div>
-        <a href="#" class="resa-button">Réserver maintenant</a>
+        <a href="./detail_produit.php" class="resa-button">Réserver maintenant</a>
     </article>
 </div>
 
