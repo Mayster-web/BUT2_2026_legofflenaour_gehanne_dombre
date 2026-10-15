@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Locfit</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
+<%- include('partials/header') %>
 
-    <main>
-        <h1>Bienvenue sur Locfit</h1>
-        <p>Réserve ton matériel sportif.</p>
-    </main>
+    <%- include('partials/nav') %>
 
-    <%- include('partials/footer') %>
+        <div class="cards">
+            <article class="card">
+                <img src="./img/placeholder.png" alt="Image placeholder" />
+                <h3>Titre H3</h3>
+                <div class="content">
+                    <p>Texte de test quoi</p>
+                </div>
+                <a href="./detail_produit.php" class="resa-button">Réserver maintenant</a>
+            </article>
+        </div>
 
-</body>
-</html>
+        <%- include('partials/footer') %>
