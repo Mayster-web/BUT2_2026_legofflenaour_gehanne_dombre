@@ -1,6 +1,9 @@
 import { DatabaseSync } from "node:sqlite";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const db = new DatabaseSync("bdd_sae301.db");
+const dbPath = join(dirname(fileURLToPath(import.meta.url)), "bdd_sae301.db");
+const db = new DatabaseSync(dbPath);
 db.exec("PRAGMA foreign_keys = ON");
 
 export default db;

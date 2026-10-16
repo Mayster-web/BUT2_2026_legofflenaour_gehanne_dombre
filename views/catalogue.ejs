@@ -8,18 +8,22 @@
                 <a href="#">Voir plus</a>
             </div>
 
-            <p>Description</p>
-
             <div class="cards">
+
+            <% produits.forEach(produit => { %>
                 <article class="card">
-                    <img src="./img/placeholder.png" alt="Image placeholder" />
-                    <h3>Titre H3</h3>
+                    <img src="<%= produit.imageUrl %>" alt="<%= produit.type %>" />
+                    <h3><%= produit.type %></h3>
                     <div class="content">
-                        <p>Texte de test quoi</p>
+                        <p><strong><%= produit.marque %> <%= produit.modele %></strong></p>
+                        <p><%= produit.description %></p>
+                        <p><strong>Prix :</strong> <%= produit.prix_location %> €/jour</p>
                     </div>
-                    <a href="./produit.ejs" class="resa-button">Réserver maintenant</a>
+                    <a href="/login" class="resa-button">Réserver maintenant</a>
                 </article>
+            <% }); %>
             </div>
+
         </main>
 
         <%- include('partials/footer') %>
