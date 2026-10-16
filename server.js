@@ -15,6 +15,10 @@ app.get('/catalogue', (req, res) => {
     res.render('catalogue');
 });
 
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
 app.use((req, res) => {
     res.status(404).sendFile("./erreur404.ejs", { root: import.meta.dirname });
 });

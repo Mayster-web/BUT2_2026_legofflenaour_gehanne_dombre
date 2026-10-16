@@ -260,6 +260,63 @@ footer p {
     padding: 0.5rem;
 }
 
+.login-page {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem 4rem;
+}
+
+.login-card h1 {
+    margin-bottom: 0.75rem;
+    color: #00078d;
+}
+
+.login-form {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.login-field {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.login-field label {
+    font-weight: 600;
+}
+
+.login-field input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid #a9adbd;
+    border-radius: 0.5rem;
+    font: inherit;
+}
+
+.login-field input:focus-visible {
+    outline: 3px solid rgba(0, 7, 141, 0.25);
+    border-color: #00078d;
+}
+
+.login-submit {
+    padding: 0.9rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #00078d;
+    color: white;
+    font: inherit;
+    font-weight: 600;
+}
+
+.login-submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.forget-mdp {
+    color: black;
+    font-size: 0.875rem;
+}
+
 .resa-button {
     display: block;
     background-color: #00078D;
