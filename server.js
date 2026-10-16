@@ -19,6 +19,10 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/inscription', (req, res) => {
+    res.render('inscription');
+});
+
 app.use((req, res) => {
     res.status(404).sendFile("./erreur404.ejs", { root: import.meta.dirname });
 });

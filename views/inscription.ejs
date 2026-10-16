@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+<%- include('partials/nav') %>
+
+<section class="login-page" aria-labelledby="signup-title">
+    <div class="login-card">
+        <div class="account-heading">
+            <a class="account-switch-link" href="/login">Se connecter</a>
+            <h1 id="signup-title">S'inscrire</h1>
+        </div>
+
+        <form class="login-form">
+            <div class="login-field">
+                <label for="signup-name">Nom complet</label>
+                <input id="signup-name" name="name" type="text" autocomplete="name" placeholder="Votre nom" required>
+            </div>
+
+            <div class="login-field">
+                <label for="signup-email">Adresse e-mail</label>
+                <input id="signup-email" name="email" type="email" autocomplete="email" placeholder="exemple@email.com" required>
+            </div>
+
+            <div class="login-field">
+                <label for="signup-password">Mot de passe</label>
+                <input id="signup-password" name="password" type="password" autocomplete="new-password" placeholder="Choisissez un mot de passe" required>
+            </div>
+
+            <div class="login-field">
+                <label for="signup-password-confirm">Confirmer le mot de passe</label>
+                <input id="signup-password-confirm" name="password-confirm" type="password" autocomplete="new-password" placeholder="Répétez votre mot de passe" required>
+            </div>
+
+            <button class="login-submit" type="button" disabled>Confirmer</button>
+        </form>
+
+    </div>
+</section>
+
+<%- include('partials/footer') %>
