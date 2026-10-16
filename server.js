@@ -15,6 +15,10 @@ app.get('/catalogue', (req, res) => {
     res.render('catalogue');
 });
 
+app.use((req, res) => {
+    res.status(404).sendFile("./erreur404.ejs", { root: import.meta.dirname });
+});
+
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
