@@ -24,7 +24,7 @@ app.get('/inscription', (req, res) => {
 });
 
 app.use((req, res) => {
-    res.status(404).sendFile("./erreur404.ejs", { root: import.meta.dirname });
+    res.status(404).render('erreur404');
 });
 
 app.listen(3000, () => {
