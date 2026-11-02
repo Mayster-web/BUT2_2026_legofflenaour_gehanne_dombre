@@ -10,7 +10,9 @@ app.set('views', './views');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index');
+    const produit = db.prepare('SELECT * FROM produit ORDER BY id LIMIT 5').all();
+    console.log(produit)
+    res.render('index', { produit });
 });
 
 app.get('/catalogue', (req, res) => {

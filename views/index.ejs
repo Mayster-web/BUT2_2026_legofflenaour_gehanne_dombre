@@ -9,14 +9,29 @@
         </div>
 
         <div class="cards">
-            <article class="card">
-                <img src="./img/placeholder.png" alt="Image placeholder" />
-                <h3>Titre H3</h3>
-                <div class="content">
-                    <p>Texte de test quoi</p>
-                </div>
-                <a href="./produit.ejs" class="resa-button">Réserver maintenant</a>
-            </article>
+
+            <% for(let id in produit){ %>
+                <% let produits=produit[id]; %>
+                    <article class="card">
+                        <img src="./img/<%= produits.image %>" alt="<%= produits.type %>" />
+                        <h3>
+                            <%= produits.type %>
+                        </h3>
+                        <div class="content">
+                            <p><strong>
+                                    <%= produits.marque %>
+                                        <%= produits.modele %>
+                                </strong></p>
+                            <p>
+                                <%= produits.description %>
+                            </p>
+                            <p><strong>Prix :</strong>
+                                <%= produits.prix_location %> €/jour
+                            </p>
+                        </div>
+                        <a href="/login" class="resa-button">Réserver maintenant</a>
+                    </article>
+                    <% ;} %>
         </div>
 
         <%- include('partials/footer') %>
