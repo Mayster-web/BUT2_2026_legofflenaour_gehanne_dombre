@@ -65,6 +65,12 @@ nav .nav-button {
     font-size: 1.125rem;
 }
 
+nav .nav-button:hover {
+    text-decoration: underline;
+    background-color: #272D9A;
+    transition: 300ms;
+}
+
 nav .nav-log {
     display: inline-block;
     background-color: #00078D;
@@ -107,6 +113,23 @@ nav .nav-log {
     color: white;
     padding: 0.8rem;
     border-radius: 1rem;
+}
+
+.home-undercard{
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-button {
+    padding: 1rem;
+    background-color: #00078D;
+    align-items: center;
+    border-radius: 1rem
+}
+
+.home-button:hover {
+    background-color: #626AFF;
+    transition: 300ms;
 }
 
 footer {
@@ -423,4 +446,9 @@ footer p {
     padding: 1rem;
     font-size: 1.125rem;
     text-align: center;
+}
+
+.resa-button:hover {
+    transition: 300ms;
+    background-color: #626AFF;
 }
