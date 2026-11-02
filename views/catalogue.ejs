@@ -10,18 +10,19 @@
 
             <div class="cards">
 
-            <% produits.forEach(produit => { %>
+            <% for(let id in produit){ %>
+                <% let produits = produit[id]; %>
                 <article class="card">
-                    <img src="./img/<%= produit.image %>" alt="<%= produit.type %>" />
-                    <h3><%= produit.type %></h3>
+                    <img src="./img/<%= produits.image %>" alt="<%= produits.type %>" />
+                    <h3><%= produits.type %></h3>
                     <div class="content">
-                        <p><strong><%= produit.marque %> <%= produit.modele %></strong></p>
-                        <p><%= produit.description %></p>
-                        <p><strong>Prix :</strong> <%= produit.prix_location %> €/jour</p>
+                        <p><strong><%= produits.marque %> <%= produits.modele %></strong></p>
+                        <p><%= produits.description %></p>
+                        <p><strong>Prix :</strong> <%= produits.prix_location %> €/jour</p>
                     </div>
                     <a href="/login" class="resa-button">Réserver maintenant</a>
                 </article>
-            <% }); %>
+            <% ;} %>
             </div>
 
         </main>

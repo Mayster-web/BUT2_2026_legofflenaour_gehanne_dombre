@@ -14,9 +14,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/catalogue', (req, res) => {
-    const produits = db.prepare('SELECT * FROM produit ORDER BY id').all();
-    console.log(produits)
-    res.render('catalogue', { produits });
+    const produit = db.prepare('SELECT * FROM produit ORDER BY id').all();
+    console.log(produit)
+    res.render('catalogue', { produit });
 });
 
 app.get('/login', (req, res) => {
