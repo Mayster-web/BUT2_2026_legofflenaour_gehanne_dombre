@@ -12,7 +12,7 @@
 
             <% produits.forEach(produit => { %>
                 <article class="card">
-                    <img src="<%= produit.imageUrl %>" alt="<%= produit.type %>" />
+                    <img src="./img/<%= produit.image %>" alt="<%= produit.type %>" />
                     <h3><%= produit.type %></h3>
                     <div class="content">
                         <p><strong><%= produit.marque %> <%= produit.modele %></strong></p>

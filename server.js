@@ -14,10 +14,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/catalogue', (req, res) => {
-    const produits = db.prepare('SELECT * FROM produit ORDER BY id').all().map(produit => ({
-        ...produit,
-        imageUrl: produit.image ? `/img/${basename(produit.image)}` : '/img/placeholder.png'
-    }));
+    const produits = db.prepare('SELECT * FROM produit ORDER BY id').all();
+    console.log(produits)
     res.render('catalogue', { produits });
 });
 
