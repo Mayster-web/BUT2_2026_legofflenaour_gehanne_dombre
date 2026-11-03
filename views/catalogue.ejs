@@ -17,8 +17,10 @@
                     <h3><%= produits.type %></h3>
                     <div class="content">
                         <p><strong><%= produits.marque %> - <%= produits.modele %></strong></p>
-                        <p><%= produits.description %></p>
-                        <p><strong>Prix :</strong> <%= produits.prix_location %> €/jour</p>
+                        <p class="description-tronquer"><%= produits.description %></p>
+                        <a href="/" class="card-plus">Voir plus →</a>
+                        
+                        <p class="prix"><strong>Prix :</strong> <%= produits.prix_location %> €/jour</p>
                     </div>
                     <a href="/login" class="resa-button">Réserver maintenant</a>
                 </article>

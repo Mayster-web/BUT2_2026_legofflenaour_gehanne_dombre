@@ -265,6 +265,7 @@ footer p {
 
 .card {
     display: grid;
+    margin: 1rem 0 0;
     grid-template-rows: 200px max-content 1fr;
 }
 
@@ -281,6 +282,24 @@ footer p {
 
 .card .content {
     padding: 0.5rem;
+}
+
+.description-tronquer {
+    margin: 0.75rem 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.card-plus{
+    color: #00078D;
+    text-decoration: underline;
+}
+
+.prix {
+    margin: 0.75rem 0 0.75rem;
 }
 
 .login-page {
