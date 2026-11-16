@@ -1,49 +1,130 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
+import { Router } from 'express';
+import db from '../bdd/dblite.js';
 
-app.post('/login', (req, res) => {
-    let username = req.body.name; // Si vous utilisez un champ "name" dans le formulaire
-    let mdp = req.body.password; // Si vous utilisez un champ "password" dans le formulaire
-    let hashedPassword = createHash('sha256').update(mdp).digest('hex');
+const router = Router();
 
-    // Rechercher l'utilisateur dans la base
-    // get(username) sert à remplacer le "?" dans la requête SQL par la valeur de username
-    const result = db.prepare("SELECT * FROM utilisateurs WHERE username = ?").get(username);
+router.post('/inscription', (req, res) => {
+    const { login, nom, prenom, ddn, email, password, 'password-confirm': passwordConfirm } = req.body;
+    const profile = {
+        login: typeof login === 'string' ? login.trim() : '',
+        nom: typeof nom === 'string' ? nom.trim() : '',
+        prenom: typeof prenom === 'string' ? prenom.trim() : '',
+        ddn: typeof ddn === 'string' ? ddn : '',
+        email: typeof email === 'string' ? email.trim().toLowerCase() : '',
+    };
 
-    // Vérifier que l'utilisateur existe et que le mot de passe correspond
-    if (result != null) {
-        if (result.password === hashedPassword) {
-            req.session.regenerate((err) => {
-                if (err) {
-                    return res.sendStatus(500);
-                }
-                req.session.userId = result.id; // Stocker l'identifiant de l'utilisateur dans la session
-                res.redirect('/pagePrivee'); // Rediriger vers la page privée
-            });
-        } else {
-            // Mot de passe incorrect
-            res.render('login', { error: 'Identifiants incorrects' });
+    const renderError = (message, status = 400) => (
+        res.status(status).render('inscription', { error: message })
+    );
+
+    if (Object.values(profile).some((value) => !value)
+        || typeof password !== 'string'
+        || password.length < 8
+        || password !== passwordConfirm) {
+        return renderError('Vérifiez les champs et assurez-vous que les mots de passe correspondent (8 caractères minimum).');
+    }
+
+    const birthDate = new Date(`${profile.ddn}T00:00:00Z`);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(profile.email)
+        || !/^\d{4}-\d{2}-\d{2}$/.test(profile.ddn)
+        || Number.isNaN(birthDate.getTime())
+        || birthDate.toISOString().slice(0, 10) !== profile.ddn
+        || birthDate > new Date()) {
+        return renderError('Veuillez saisir une adresse e-mail et une date de naissance valides.');
+    }
+
+    const existingUser = db.prepare(
+        'SELECT login, email FROM utilisateur WHERE login = ? OR email = ?',
+    ).get(profile.login, profile.email);
+
+    if (existingUser) {
+        return renderError(
+            existingUser.login === profile.login
+                ? 'Ce nom d’utilisateur est déjà utilisé.'
+                : 'Cette adresse e-mail est déjà utilisée.',
+            409,
+        );
+    }
+
+    const salt = randomBytes(16).toString('hex');
+    const passwordHash = `$scrypt$${salt}$${scryptSync(password, salt, 64).toString('hex')}`;
+
+    try {
+        db.prepare(`
+            INSERT INTO utilisateur (login, password, nom, prenom, ddn, email, type_utilisateur)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `).run(
+            profile.login,
+            passwordHash,
+            profile.nom,
+            profile.prenom,
+            profile.ddn,
+            profile.email,
+            'client',
+        );
+    } catch (error) {
+        if (error.code === 'ERR_SQLITE_CONSTRAINT_UNIQUE' || error.errcode === 2067) {
+            return renderError('Ce nom d’utilisateur ou cette adresse e-mail est déjà utilisé.', 409);
         }
-    } else {
-        // Utilisateur non trouvé
-        res.render('login', { error: 'Identifiants incorrects' });
+        throw error;
     }
+
+    res.render('inscription', {
+        success: 'Votre compte a été créé. Vous pouvez maintenant vous connecter.',
+    });
 });
 
-function exigerConnexion(req, res, next) {
-    if (!req.session.userId) {
-        return res.redirect('/login');
-    }
-    next();
-}
+router.post('/login', (req, res) => {
+    const { email, password } = req.body;
 
-app.get('/pagePrivee', exigerConnexion, (req, res) => {
-    // dans cet exemple on affiche l'identifiant de l'utilisateur connecté, mais on pourrait aussi récupérer d'autres informations plus utiles dans la base de données.
-    res.render('pagePrivee', { userId: req.session.userId });
+    if (typeof email !== 'string' || typeof password !== 'string') {
+        return res.status(400).render('login', { error: 'Veuillez saisir votre e-mail et votre mot de passe.' });
+    }
+
+    const user = db.prepare(
+        'SELECT id, password FROM utilisateur WHERE email = ?',
+    ).get(email.trim().toLowerCase());
+    const storedHash = user?.password ?? '';
+    const scryptMatch = storedHash.match(/^\$scrypt\$([a-f\d]{32})\$([a-f\d]{128})$/i);
+    const legacyAlgorithm = storedHash.length === 32
+        ? 'md5'
+        : storedHash.length === 64 ? 'sha256' : null;
+    const expectedHash = scryptMatch
+        ? scryptSync(password, scryptMatch[1], 64)
+        : legacyAlgorithm ? createHash(legacyAlgorithm).update(password).digest() : null;
+    const storedPassword = Buffer.from(scryptMatch ? scryptMatch[2] : storedHash, 'hex');
+    const passwordMatches = expectedHash !== null
+        && storedPassword.length === expectedHash.length
+        && timingSafeEqual(storedPassword, expectedHash);
+
+    if (!user || !passwordMatches) {
+        return res.status(401).render('login', { error: 'Identifiants incorrects.' });
+    }
+
+    if (!scryptMatch) {
+        const salt = randomBytes(16).toString('hex');
+        const upgradedHash = `$scrypt$${salt}$${scryptSync(password, salt, 64).toString('hex')}`;
+        db.prepare('UPDATE utilisateur SET password = ? WHERE id = ?').run(upgradedHash, user.id);
+    }
+
+    req.session.regenerate((error) => {
+        if (error) {
+            return res.sendStatus(500);
+        }
+
+        req.session.userId = user.id;
+        res.redirect('/');
+    });
 });
 
-app.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) return res.sendStatus(500);
+router.get('/logout', (req, res) => {
+    req.session.destroy((error) => {
+        if (error) {
+            return res.sendStatus(500);
+        }
         res.redirect('/login');
     });
 });
+
+export default router;

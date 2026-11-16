@@ -1,5 +1,5 @@
 <nav>
-    <a href="#" class="nav-logo">
+    <a href="/index" class="nav-logo">
         <img class="logo" src="./img/logo-locfit.png" alt="Le logo de Locfit">
     </a>
 
@@ -11,7 +11,12 @@
         <li><a href="/contact" class="nav-button">Contact</a></li>
     </ul>
 
-    <a href="/login" class="nav-log">Se connecter</a>
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <span class="nav-log">Bonjour, <%= currentUser.login %></span>
+        <a href="/logout" class="nav-log">Se déconnecter</a>
+    <% } else { %>
+        <a href="/login" class="nav-log">Se connecter</a>
+    <% } %>
 </nav>
 
 <main>

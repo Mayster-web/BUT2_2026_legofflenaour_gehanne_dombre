@@ -9,10 +9,32 @@
             <h1 id="signup-title">S'inscrire</h1>
         </div>
 
-        <form class="login-form">
+        <% if (typeof error !== 'undefined' && error) { %>
+            <p role="alert"><%= error %></p>
+        <% } %>
+        <% if (typeof success !== 'undefined' && success) { %>
+            <p role="status"><%= success %></p>
+        <% } %>
+
+        <form class="login-form" method="POST" action="/inscription">
             <div class="login-field">
-                <label for="signup-name">Nom complet</label>
-                <input id="signup-name" name="name" type="text" autocomplete="name" placeholder="Votre nom" required>
+                <label for="signup-login">Nom d'utilisateur</label>
+                <input id="signup-login" name="login" type="text" autocomplete="username" placeholder="Choisissez un identifiant" required>
+            </div>
+
+            <div class="login-field">
+                <label for="signup-prenom">Prénom</label>
+                <input id="signup-prenom" name="prenom" type="text" autocomplete="given-name" placeholder="Votre prénom" required>
+            </div>
+
+            <div class="login-field">
+                <label for="signup-nom">Nom</label>
+                <input id="signup-nom" name="nom" type="text" autocomplete="family-name" placeholder="Votre nom" required>
+            </div>
+
+            <div class="login-field">
+                <label for="signup-ddn">Date de naissance</label>
+                <input id="signup-ddn" name="ddn" type="date" autocomplete="bday" required>
             </div>
 
             <div class="login-field">
@@ -30,7 +52,7 @@
                 <input id="signup-password-confirm" name="password-confirm" type="password" autocomplete="new-password" placeholder="Répétez votre mot de passe" required>
             </div>
 
-            <button class="login-submit" type="button" disabled>Confirmer</button>
+            <button class="login-submit" type="submit">Confirmer</button>
         </form>
 
         <div class="social-login" aria-label="Inscription avec un compte social">
