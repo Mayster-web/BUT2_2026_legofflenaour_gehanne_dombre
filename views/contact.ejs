@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+    <%- include('partials/nav') %>
+
+        <img class="accueil" src="./img/accueil.png" alt="Image d'accueil Locfit" />
+        <div class="home-undercard">
+            <h1>Contactez-nous</h1>
+        </div>
+
+        <div class="login-form">
+            <div class="login-field">
+                <label for="login-name">Nom</label>
+                <input id="login-name" name="nom" type="nom" autocomplete="nom" placeholder="Votre nom" required>
+            </div>
+
+            <div class="login-field">
+                <label for="login-email">Adresse e-mail</label>
+                <input id="login-email" name="email" type="email" autocomplete="email" placeholder="exemple@email.com" required>
+            </div>
+
+            <div class="login-field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+
+            <button class="login-submit" type="button" disabled>Envoyer</button>
+        </form>
+
+        <%- include('partials/footer') %>
