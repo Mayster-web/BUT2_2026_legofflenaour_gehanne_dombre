@@ -10,7 +10,7 @@ app.set('views', './views');
 
 app.use(express.static('public'));
 
-pp.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
     secret: "LescargotMangeLabretelleDautoroute", // Dans un véritable environnement de production, le secret ne serait pas écrit ici
