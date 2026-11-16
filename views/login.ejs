@@ -9,7 +9,11 @@
             <a class="account-switch-link" href="/inscription">S'inscrire</a>
         </div>
 
-        <form class="login-form">
+        <% if (typeof error !== 'undefined' && error) { %>
+            <p role="alert"><%= error %></p>
+        <% } %>
+
+        <form class="login-form" method="POST" action="/login">
             <div class="login-field">
                 <label for="login-email">Adresse e-mail</label>
                 <input id="login-email" name="email" type="email" autocomplete="email" placeholder="exemple@email.com" required>
@@ -21,7 +25,7 @@
             </div>
             <a class="forget-mdp"href="#">Mot de passe oublié ?</a>
 
-            <button class="login-submit" type="button" disabled>Confirmer</button>
+            <button class="login-submit" type="submit">Confirmer</button>
         </form>
 
         <div class="social-login" aria-label="Connexion avec un compte social">
