@@ -31,9 +31,7 @@ app.get('/catalogue', (req, res) => {
 });
 
 app.get('/contact', (req, res) => {
-    const produit = db.prepare('SELECT * FROM produit ORDER BY id').all();
-    console.log(produit)
-    res.render('contact', { produit });
+    res.render('contact');
 });
 
 app.get('/login', (req, res) => {
