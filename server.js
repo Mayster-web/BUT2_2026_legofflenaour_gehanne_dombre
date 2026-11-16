@@ -1,6 +1,7 @@
 import express from 'express';
 import { basename } from 'node:path';
 import db from './bdd/dblite.js';
+import session from 'express-session';
 
 const app = express();
 
@@ -8,6 +9,14 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(express.static('public'));
+
+app.use(express.urlencoded({ extended: false }));
+
+app.use(session({
+    secret: "LescargotMangeLabretelleDautoroute", // Dans un véritable environnement de production, le secret ne serait pas écrit ici
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.get('/', (req, res) => {
     const produit = db.prepare('SELECT * FROM produit ORDER BY id LIMIT 5').all();
