@@ -40,6 +40,12 @@ app.get('/catalogue', (req, res) => {
     res.render('catalogue', { produit });
 });
 
+app.get('/contact', (req, res) => {
+    const produit = db.prepare('SELECT * FROM produit ORDER BY id').all();
+    console.log(produit)
+    res.render('contact', { produit });
+});
+
 app.get('/login', (req, res) => {
     res.render('login');
 });
