@@ -19,6 +19,10 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = Boolean(req.session.userId);
+    next();
+});
 
 // ==================================================
 // MIDDLESWARES
@@ -40,6 +44,13 @@ function exigerConnexion(req, res, next) {
 
 app.use(authRoutes);    
 
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) return res.sendStatus(500);
+        res.redirect('/');
+    });
+});
+
 app.get('/', (req, res) => {
     const produit = db.prepare('SELECT * FROM produit ORDER BY id LIMIT 5').all();
     console.log(produit);
@@ -47,7 +58,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { error: '' });
 });
 
 app.get('/inscription', (req, res) => {
