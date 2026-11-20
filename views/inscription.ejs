@@ -9,14 +9,7 @@
             <h1 id="signup-title">S'inscrire</h1>
         </div>
 
-        <% if (typeof error !== 'undefined' && error) { %>
-            <p role="alert"><%= error %></p>
-        <% } %>
-        <% if (typeof success !== 'undefined' && success) { %>
-            <p role="status"><%= success %></p>
-        <% } %>
-
-        <form class="login-form" method="POST" action="/inscription">
+        <form class="login-form" method="POST" action="/">
             <div class="login-field">
                 <label for="signup-login">Nom d'utilisateur</label>
                 <input id="signup-login" name="login" type="text" autocomplete="username" placeholder="Choisissez un identifiant" required>

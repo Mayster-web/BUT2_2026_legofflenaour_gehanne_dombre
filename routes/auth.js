@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
 
 app.post('/login', (req, res) => {
-    let username = req.body.name // Si vous utilisez un champ "name" dans le formulaire
+    let username = req.body.username // Si vous utilisez un champ "name" dans le formulaire
+    let email = req.body.email // Si vous utilisez un champ "name" dans le formulaire
     let mdp = req.body.password // Si vous utilisez un champ "password" dans le formulaire;
     let hashedPassword = createHash('sha256').update(mdp).digest('hex');
 
