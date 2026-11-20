@@ -2,7 +2,6 @@ import express from 'express';
 import { basename } from 'node:path';
 import db from './bdd/dblite.js';
 import session from 'express-session';
-import authRouter from './routes/auth.js';
 
 const app = express();
 
@@ -18,15 +17,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-
-app.use((req, res, next) => {
-    res.locals.currentUser = req.session.userId
-        ? db.prepare('SELECT login FROM utilisateur WHERE id = ?').get(req.session.userId) ?? null
-        : null;
-    next();
-});
-
-app.use(authRouter);
 
 app.get('/', (req, res) => {
     const produit = db.prepare('SELECT * FROM produit ORDER BY id LIMIT 5').all();

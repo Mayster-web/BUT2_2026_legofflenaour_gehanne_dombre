@@ -1,51 +1,54 @@
 <%- include('partials/header') %>
 
-<%- include('partials/nav') %>
+    <%- include('partials/nav') %>
 
-<section class="login-page" aria-labelledby="login-title">
-    <div class="login-card">
-        <div class="account-heading">
-            <h1 id="login-title">Se connecter</h1>
-            <a class="account-switch-link" href="/inscription">S'inscrire</a>
-        </div>
+        <section class="login-page" aria-labelledby="login-title">
+            <div class="login-card">
+                <div class="account-heading">
+                    <h1 id="login-title">Se connecter</h1>
+                    <a class="account-switch-link" href="/inscription">S'inscrire</a>
+                </div>
 
-        <% if (typeof error !== 'undefined' && error) { %>
-            <p role="alert"><%= error %></p>
-        <% } %>
+                <p role="alert"></p>
 
-        <form class="login-form" method="POST" action="/login">
-            <div class="login-field">
-                <label for="login-email">Adresse e-mail</label>
-                <input id="login-email" name="email" type="email" autocomplete="email" placeholder="exemple@email.com" required>
+                <form class="login-form" method="POST" action="/login">
+                    <div class="login-field">
+                        <label for="login-email">Adresse e-mail</label>
+                        <input id="login-email" name="email" type="email" autocomplete="email"
+                            placeholder="exemple@email.com" required>
+                    </div>
+
+                    <div class="login-field">
+                        <label for="login-password">Mot de passe</label>
+                        <input id="login-password" name="password" type="password" autocomplete="current-password"
+                            placeholder="Votre mot de passe" required>
+                    </div>
+                    <a class="forget-mdp" href="#">Mot de passe oublié ?</a>
+
+                    <button class="login-submit" type="submit">Confirmer</button>
+                </form>
+
+                <div class="social-login" aria-label="Connexion avec un compte social">
+                    <p class="social-login-divider"><span>ou continuer avec</span></p>
+                    <div class="social-login-options">
+                        <button class="social-login-button social-apple" type="button" aria-label="Connexion avec Apple"
+                            disabled>
+                            <i class="fa-brands fa-apple" aria-hidden="true"></i>
+                            Apple
+                        </button>
+                        <button class="social-login-button social-google" type="button"
+                            aria-label="Connexion avec Google" disabled>
+                            <i class="fa-brands fa-google" aria-hidden="true"></i>
+                            Google
+                        </button>
+                        <button class="social-login-button social-facebook" type="button"
+                            aria-label="Connexion avec Facebook" disabled>
+                            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                            Facebook
+                        </button>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="login-field">
-                <label for="login-password">Mot de passe</label>
-                <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Votre mot de passe" required>
-            </div>
-            <a class="forget-mdp"href="#">Mot de passe oublié ?</a>
-
-            <button class="login-submit" type="submit">Confirmer</button>
-        </form>
-
-        <div class="social-login" aria-label="Connexion avec un compte social">
-            <p class="social-login-divider"><span>ou continuer avec</span></p>
-            <div class="social-login-options">
-                <button class="social-login-button social-apple" type="button" aria-label="Connexion avec Apple" disabled>
-                    <i class="fa-brands fa-apple" aria-hidden="true"></i>
-                    Apple
-                </button>
-                <button class="social-login-button social-google" type="button" aria-label="Connexion avec Google" disabled>
-                    <i class="fa-brands fa-google" aria-hidden="true"></i>
-                    Google
-                </button>
-                <button class="social-login-button social-facebook" type="button" aria-label="Connexion avec Facebook" disabled>
-                    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-                    Facebook
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
-
-<%- include('partials/footer') %>
+        <%- include('partials/footer') %>

@@ -11,12 +11,7 @@
         <li><a href="/contact" class="nav-button">Contact</a></li>
     </ul>
 
-    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
-        <span class="nav-log">Bonjour, <%= currentUser.login %></span>
-        <a href="/logout" class="nav-log">Se déconnecter</a>
-    <% } else { %>
-        <a href="/login" class="nav-log">Se connecter</a>
-    <% } %>
+    <a href="/login" class="nav-log">Se connecter</a>
 </nav>
 
 <main>
