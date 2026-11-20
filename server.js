@@ -43,11 +43,12 @@ app.get('/contact', (req, res) => {
     const produit = db.prepare('SELECT * FROM produit ORDER BY id').all();
     console.log(produit)
     res.render('contact', { produit });
-// Page détaille produit
+});
+// Page détail produit
 app.get('/:id', (req, res) => {
     const id = req.params.id;
     const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(id);
-    res.render('detaille', { produit })
+    res.render('detail', { produit })
 });
 
 app.get('/login', (req, res) => {
