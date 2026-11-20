@@ -1,6 +1,10 @@
 import { createHash } from 'node:crypto';
+import { Router } from 'express';
 
-app.post('/login', (req, res) => {
+const router = Router();
+
+router.post('/login', (req, res) => {
+    console.log("cdccccccccccccccccccc")
     let username = req.body.username // Si vous utilisez un champ "name" dans le formulaire
     let email = req.body.email // Si vous utilisez un champ "name" dans le formulaire
     let mdp = req.body.password // Si vous utilisez un champ "password" dans le formulaire;
@@ -18,7 +22,7 @@ app.post('/login', (req, res) => {
                     return res.sendStatus(500);
                 }
                 req.session.userId = result.id; // Stocker l'identifiant de l'utilisateur dans la session
-                res.redirect('/pagePrivee'); // Rediriger vers la page privée
+                res.redirect('/'); // Rediriger vers la page privée
             });
         } else {
             // Mot de passe incorrect
@@ -30,3 +34,5 @@ app.post('/login', (req, res) => {
         res.render('login', { error: 'Identifiants incorrects' });
     }
 });
+
+export default router;
