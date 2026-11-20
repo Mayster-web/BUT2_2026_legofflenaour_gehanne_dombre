@@ -70,7 +70,7 @@ app.get('/catalogue', (req, res) => {
     res.render('catalogue', { produit });
 });
 
-app.get('/louer-:id', (req, res) => {
+app.get('/louer/:id', (req, res) => {
     const id = req.params.id;
     const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(id);
     res.render('louer');
