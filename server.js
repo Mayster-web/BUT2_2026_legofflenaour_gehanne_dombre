@@ -5,6 +5,18 @@ import session from 'express-session';
 
 const app = express();
 
+function exigerConnexion(req, res, next) {
+    if (!req.session.userId) {
+        return res.redirect('/login');
+    }
+    next();
+}
+
+app.get('/pagePrivee', exigerConnexion, (req, res) => {
+    // dans cet exemple on affiche l'identifiant de l'utilisateur connecté, mais on pourrait aussi récupérer d'autres informations plus utiles dans la base de données.
+    res.render('pagePrivee', { userId: req.session.userId });
+});
+
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
