@@ -518,3 +518,11 @@ footer p {
     background: #00078D;
     color: #ffffff;
 }
+
+.retour-accueil {
+    color: #00078D;
+    padding: 0.4rem 0.8rem;  
+    border-radius: 25px;
+    background: #00078D;
+    color: #ffffff;    
+}
