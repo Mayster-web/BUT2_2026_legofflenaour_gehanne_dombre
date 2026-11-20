@@ -20,7 +20,7 @@ app.use(session({
 
 app.get('/', (req, res) => {
     const produit = db.prepare('SELECT * FROM produit ORDER BY id LIMIT 5').all();
-    console.log(produit)
+    console.log(produit);
     res.render('index', { produit });
 });
 
