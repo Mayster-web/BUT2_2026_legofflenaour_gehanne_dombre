@@ -8,7 +8,7 @@ app.post('/login', (req, res) => {
 
     // Rechercher l'utilisateur dans la base
     // get(username) sert à "remplacer" le "?" dans la requête SQL par la valeur de username
-    const result = db.prepare("SELECT * FROM utilisateurs WHERE username = ?").get(username);
+    const result = db.prepare("SELECT * FROM utilisateurs WHERE email = ?").get(email);
 
     // Vérifier que l'utilisateur existe et que le mot de passe correspond
     if (result != null) {
