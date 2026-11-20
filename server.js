@@ -76,7 +76,7 @@ app.get('/contact', (req, res) => {
 });
 
 // Page détail produit
-app.get('/detail-:id', (req, res) => {
+app.get('/detail/:id', (req, res) => {
     const id = req.params.id;
     const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(id);
     res.render('detail', { produit })
