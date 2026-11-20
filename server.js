@@ -6,12 +6,10 @@ import authRoutes from './routes/auth.js';
 
 const app = express();
 
-
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(express.static('public'));
-
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -20,9 +18,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+
 // ==================================================
 // MIDDLESWARES
 // ==================================================
+
 
 function exigerConnexion(req, res, next) {
     if (!req.session.userId) {
@@ -32,14 +33,12 @@ function exigerConnexion(req, res, next) {
 };
 
 
-
-
 // ==================================================
 // ROUTES
 // ==================================================
 
-app.use(authRoutes);
 
+app.use(authRoutes);
 
 app.get('/', exigerConnexion, (req, res) => {
     // dans cet exemple on affiche l'identifiant de l'utilisateur connecté, mais on pourrait aussi récupérer d'autres informations plus utiles dans la base de données.
