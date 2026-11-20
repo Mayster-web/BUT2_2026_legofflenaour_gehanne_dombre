@@ -38,12 +38,7 @@ function exigerConnexion(req, res, next) {
 // ==================================================
 
 
-app.use(authRoutes);
-
-app.get('/', exigerConnexion, (req, res) => {
-    // dans cet exemple on affiche l'identifiant de l'utilisateur connecté, mais on pourrait aussi récupérer d'autres informations plus utiles dans la base de données.
-    res.render('pagePrivee', { userId: req.session.userId });
-});
+app.use(authRoutes);    
 
 app.get('/', (req, res) => {
     const produit = db.prepare('SELECT * FROM produit ORDER BY id LIMIT 5').all();
