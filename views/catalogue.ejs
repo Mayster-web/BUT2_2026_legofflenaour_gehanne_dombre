@@ -18,7 +18,7 @@
                     <div class="content">
                         <p><strong><%= produits.marque %> - <%= produits.modele %></strong></p>
                         <p class="description-tronquer"><%= produits.description %></p>
-                        <a href="/" class="card-plus">Voir plus →</a>
+                        <a href="/<%= produits.id %>" class="card-plus">Voir plus →</a>
                         
                         <p class="prix"><strong>Prix :</strong> <%= produits.prix_location %> €/jour</p>
                     </div>
