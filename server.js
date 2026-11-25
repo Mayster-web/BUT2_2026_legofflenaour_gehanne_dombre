@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 // ==================================================
-// MIDDLESWARES
+// MIDDLEWARES
 // ==================================================
 
 
@@ -42,7 +42,7 @@ function exigerConnexion(req, res, next) {
 // ==================================================
 
 
-app.use(authRoutes);    
+app.use(authRoutes);
 
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
@@ -85,6 +85,19 @@ app.get('/detail/:id', (req, res) => {
     const id = req.params.id;
     const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(id);
     res.render('detail', { produit })
+});
+
+app.get('/supprimer:id', (req, res) => {
+    const produit = db.prepare('DELETE * FROM produit WHERE id = ?').all();
+    console.log(produit);
+    res.render('index', { produit });
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) return res.sendStatus(500);
+        res.redirect('/login');
+    })
 });
 
 app.use((req, res) => {
