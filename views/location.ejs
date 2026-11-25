@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+    <%- include('partials/nav') %>
+
+        <main>
+            <% if (!produit) { %>
+                <h1>Aucune location en cours</h1>
+                <% } else { %>
+                    <div class="location-en-cours">
+                        <% for (let location of produit) { %>
+                            <div class="cards-location">
+                                <img src="/img/<%= location.image %>" class="location-image" alt="<%= location.type %>">
+                                <div class="cards-content">
+                                    <h2>
+                                        <%= location.type %>
+                                    </h2>
+                                    <p><strong>
+                                            <%= location.marque %> - <%= location.modele %>
+                                        </strong></p>
+                                    <p>Reception : <%= location.date_debut %></p>
+                                    <p>Retour : <%= location.date_retour_prevue %></p>
+                                    <p><strong>Prix total : <%= location.prix_total %> €</strong></p>
+                                </div>
+                                <form method="POST" action="/location/<%= location.location_id %>/annuler">
+                                    <button class="btn-annuler" type="submit">Annuler réservation</button>
+                                </form>
+                            </div>
+                            <% } %>
+                        </div>
+                    <% } %>
+        </main>
+
+        <%- include('partials/footer') %>
