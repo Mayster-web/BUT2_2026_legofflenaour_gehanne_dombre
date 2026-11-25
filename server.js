@@ -42,7 +42,7 @@ function exigerConnexion(req, res, next) {
 // ==================================================
 
 
-app.use(authRoutes);    
+app.use(authRoutes);
 
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
@@ -70,10 +70,61 @@ app.get('/catalogue', (req, res) => {
     res.render('catalogue', { produit });
 });
 
-app.get('/louer/:id', (req, res) => {
-    const id = req.params.id;
-    const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(id);
+app.get('/louer/:id', exigerConnexion, (req, res) => {
+    const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(req.params.id);
+    if (!produit) {
+        return res.status(404).render('erreur404');
+    }
     res.render('louer', { produit });
+});
+
+app.post('/louer/:id', exigerConnexion, (req, res) => {
+    const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(req.params.id);
+    if (!produit) return res.status(404).render('erreur404');
+
+    // Récupère les dates envoyées par le formulaire.
+    const { date_debut, date_retour_prevue } = req.body;
+    // Convertit les dates en nombres pour pouvoir les comparer et calculer la durée.
+    const debut = Date.parse(date_debut);
+    const fin = Date.parse(date_retour_prevue);
+
+    // Vérifie que les deux dates sont valides et que la fin vient après le début.
+    if (isNaN(debut) || isNaN(fin) || fin <= debut) {
+        return res.status(400).send('Les dates de réservation sont invalides.');
+    }
+
+    // Calcule la durée de la réservation en jours (86 400 000 ms = 1 jour).
+    const jours = (fin - debut) / 86_400_000;
+    // Applique 10 % de réduction pour les locations d'au moins 7 jours.
+    const reduction = jours >= 7 ? 0.9 : 1;
+    // Calcule le prix côté serveur à partir du tarif enregistré en base.
+    const prixTotal = jours * produit.prix_location * reduction;
+
+    db.prepare(`
+        INSERT INTO location (date_debut, date_retour_prevue, prix_total, utilisateur_id, produit_id)
+        VALUES (?, ?, ?, ?, ?)
+    `).run(date_debut, date_retour_prevue, prixTotal, req.session.userId, produit.id);
+
+    res.redirect('/');
+});
+
+app.get('/location', exigerConnexion, (req, res) => {
+    const produit = db.prepare(`
+        SELECT produit.*, location.id AS location_id,
+               location.date_debut, location.date_retour_prevue, location.prix_total
+        FROM produit
+        JOIN location ON produit.id = location.produit_id
+        WHERE location.utilisateur_id = ?
+    `).all(req.session.userId);
+    res.render('location', { produit });
+});
+
+app.post('/location/:id/annuler', exigerConnexion, (req, res) => {
+    // Supprime uniquement la réservation appartenant à l'utilisateur connecté.
+    db.prepare('DELETE FROM location WHERE id = ? AND utilisateur_id = ?')
+        .run(req.params.id, req.session.userId);
+
+    res.redirect('/location');
 });
 
 app.get('/contact', (req, res) => {
