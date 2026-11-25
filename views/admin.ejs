@@ -1,0 +1,80 @@
+<%- include('partials/header') %>
+
+<%- include('partials/nav') %>
+
+<div class="manager-page">
+    <h1>Administration des agents</h1>
+
+    <% if (erreur) { %>
+        <p class="manager-error" role="alert"><%= erreur %></p>
+    <% } %>
+
+    <section class="manager-section" aria-labelledby="agents-heading">
+        <h2 id="agents-heading">Agents actuels</h2>
+        <% if (agents.length === 0) { %>
+            <p>Aucun agent n'est enregistré.</p>
+        <% } else { %>
+            <div class="manager-table-wrapper">
+                <table class="manager-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Identifiant</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (const agent of agents) { %>
+                            <tr>
+                                <td><%= agent.login %></td>
+                                <td><%= agent.nom %></td>
+                                <td><%= agent.prenom %></td>
+                                <td><%= agent.email %></td>
+                                <td>
+                                    <form method="POST" action="/admin/agents/<%= agent.id %>/supprimer">
+                                        <button class="manager-delete" type="submit">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </section>
+
+    <section class="manager-section" aria-labelledby="ajout-agent-heading">
+        <h2 id="ajout-agent-heading">Ajouter un agent</h2>
+        <form class="manager-form" method="POST" action="/admin/agents">
+            <label>
+                Identifiant *
+                <input type="text" name="login" required>
+            </label>
+            <label>
+                Mot de passe *
+                <input type="password" name="password" required>
+            </label>
+            <label>
+                Prénom *
+                <input type="text" name="prenom" required>
+            </label>
+            <label>
+                Nom *
+                <input type="text" name="nom" required>
+            </label>
+            <label>
+                Date de naissance *
+                <input type="date" name="ddn" required>
+            </label>
+            <label>
+                E-mail *
+                <input type="email" name="email" required>
+            </label>
+            <button class="manager-submit" type="submit">Ajouter l'agent</button>
+        </form>
+    </section>
+</div>
+
+<%- include('partials/footer') %>
