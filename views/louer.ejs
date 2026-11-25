@@ -1,11 +1,90 @@
 <%- include('partials/header') %>
-
     <%- include('partials/nav') %>
 
-
         <main>
-            <p>louer</p>
-        </main>
+            <% if (!produit) { %>
+                <h1>Produit introuvable</h1>
+                <% } else { %>
+                    <section class="location">
+                        <div class="location-detail">
+                            <h1>Réservation</h1>
+                            <img src="/img/<%= produit.image %>" class="location-image" alt="<%= produit.type %>">
+                            <div class="content">
+                                <h2>
+                                    <%= produit.type %>
+                                </h2>
+                                <p><strong>
+                                        <%= produit.marque %> - <%= produit.modele %>
+                                    </strong></p>
+                                <p>
+                                    <%= produit.description %>
+                                </p>
+                                <p><strong>
+                                        <%= produit.prix_location %> € / jour
+                                    </strong></p>
+                                <p> etat : <%= produit.etat %>
+                                </p>
+                            </div>
+                        </div>
 
+                        <form class="login-form" method="POST" action="/louer/<%= produit.id %>">
+                            <label class="login-field" for="date-debut">
+                                Date de début
+                                <input id="date-debut" name="date_debut" type="date" required>
+                            </label>
+
+                            <label class="login-field" for="date-fin">
+                                Date de fin
+                                <input id="date-fin" name="date_retour_prevue" type="date" required>
+                            </label>
+
+                            <p id="estimation" aria-live="polite">Sélectionne tes dates pour calculer le prix.</p>
+                            <button class="login-submit btn" type="submit" disabled>Confirmer la réservation</button>
+                        </form>
+                    </section>
+
+                    <script>
+                        const debut = document.querySelector('#date-debut');
+                        const fin = document.querySelector('#date-fin');
+                        const estimation = document.querySelector('#estimation');
+                        const bouton = document.querySelector('button[type="submit"]');
+                        const prixParJour = <%= Number(produit.prix_location) || 0 %>;
+
+                        // Interdit les dates passées.
+                        debut.min = new Date().toISOString().slice(0, 10);
+
+                        function calculerPrix() {
+                            bouton.disabled = true;
+
+                            if (!debut.value || !fin.value) {
+                                estimation.textContent = 'Sélectionne tes dates pour calculer le prix.';
+                                return;
+                            }
+
+                            const jours = (Date.parse(fin.value) - Date.parse(debut.value)) / 86400000;
+
+                            if (jours <= 0) {
+                                estimation.textContent = 'La date de fin doit être après la date de début.';
+                                return;
+                            }
+
+                            let prixFinal = jours * prixParJour;
+
+                            if (jours >= 7) {
+                                prixFinal = prixFinal * 0.9;
+                            }
+
+                            estimation.textContent = `Prix total : ${prixFinal.toFixed(2)} €`;
+                            bouton.disabled = false;
+                        }
+
+                        debut.addEventListener('change', () => {
+                            fin.min = debut.value;
+                            calculerPrix();
+                        });
+                        fin.addEventListener('change', calculerPrix);
+                    </script>
+                    <% } %>
+        </main>
 
         <%- include('partials/footer') %>

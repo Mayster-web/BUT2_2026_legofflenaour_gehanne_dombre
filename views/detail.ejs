@@ -2,28 +2,31 @@
 
     <%- include('partials/nav') %>
 
-
         <main class="detail">
-            <img src="/img/<%= produit.image %>" alt="<%= produit.type %>" />
-            <div class="content">
-                <h3>
-                    <%= produit.type %>
-                </h3>
-                <p class="prix">
-                    <strong>
-                        <%= produit.prix_location %> €
-                    </strong> / jour
-                </p>
-                <p>
-                    <strong>
-                        <%= produit.marque %> - <%= produit.modele %>
-                    </strong>
-                </p>
-                <p>
-                    <%= produit.description %>
-                </p>
-                <a href="/louer/<%= produit.id %>" class="btn-reserver">Réserver</a>
-            </div>
+            <% if (!produit) { %>
+                <h1>Produit introuvable</h1>
+                <% } else { %>
+                    <img src="/img/<%= produit.image %>" alt="<%= produit.type %>" />
+                    <div class="content">
+                        <h3>
+                            <%= produit.type %>
+                        </h3>
+                        <p class="prix">
+                            <strong>
+                                <%= produit.prix_location %> €
+                            </strong> / jour
+                        </p>
+                        <p>
+                            <strong>
+                                <%= produit.marque %> - <%= produit.modele %>
+                            </strong>
+                        </p>
+                        <p>
+                            <%= produit.description %>
+                        </p>
+                        <a href="/louer/<%= produit.id %>" class="btn-reserver">Réserver</a>
+                    </div>
+                    <% } %>
         </main>
 
 
