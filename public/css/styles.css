@@ -582,3 +582,108 @@ footer p {
 .btn {
     width: 100%;
 }
+
+.manager-page {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-bottom: 3rem;
+}
+
+.manager-page h1 {
+    margin-bottom: 1.5rem;
+    color: #00078d;
+}
+
+.manager-section {
+    margin-bottom: 2rem;
+}
+
+.manager-section h2 {
+    margin-bottom: 1rem;
+}
+
+.manager-error {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #b42318;
+    border-radius: 0.5rem;
+    color: #8f1c13;
+    background: #fff3f2;
+}
+
+.manager-table-wrapper {
+    overflow-x: auto;
+}
+
+.manager-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.manager-table th,
+.manager-table td {
+    padding: 0.75rem;
+    border: 1px solid #d5d7df;
+    text-align: left;
+}
+
+.manager-table th {
+    background: #f0f1f8;
+}
+
+.manager-delete,
+.manager-submit {
+    padding: 0.7rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    font: inherit;
+}
+
+.manager-delete {
+    background: #b42318;
+}
+
+.manager-delete:hover {
+    background: #8f1c13;
+}
+
+.manager-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+}
+
+.manager-form label {
+    display: grid;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.manager-form input,
+.manager-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #a9adbd;
+    border-radius: 0.5rem;
+    font: inherit;
+}
+
+.manager-description {
+    grid-column: 1 / -1;
+}
+
+.manager-submit {
+    justify-self: start;
+    background: #00078d;
+}
+
+@media (max-width: 600px) {
+    .manager-form {
+        grid-template-columns: 1fr;
+    }
+
+    .manager-description {
+        grid-column: auto;
+    }
+}

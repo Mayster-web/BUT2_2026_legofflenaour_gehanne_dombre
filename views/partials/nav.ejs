@@ -1,6 +1,6 @@
 <nav>
     <a href="/" class="nav-logo">
-        <img class="logo" src="./img/logo-locfit.png" alt="Le logo de Locfit">
+        <img class="logo" src="/img/logo-locfit.png" alt="Le logo de Locfit">
     </a>
 
     <ul class="navigation">
@@ -9,6 +9,12 @@
         <li><a href="#" class="nav-button">Historique</a></li>
         <li><a href="/location" class="nav-button">Mes locations</a></li>
         <li><a href="/contact" class="nav-button">Contact</a></li>
+        <% if (isAgent) { %>
+            <li><a href="/agent" class="nav-button">Gestion</a></li>
+        <% } %>
+        <% if (isAdmin) { %>
+            <li><a href="/admin" class="nav-button">Administration</a></li>
+        <% } %>
     </ul>
 
     <% if (isLoggedIn) { %>
