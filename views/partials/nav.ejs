@@ -15,10 +15,11 @@
         <% if (isAdmin) { %>
             <li><a href="/admin" class="nav-button">Administration</a></li>
         <% } %>
+        
     </ul>
 
     <% if (isLoggedIn) { %>
-        <a href="/logout" class="nav-log">Se déconnecter</a>
+        <a href="/compte" class="nav-log">Mon compte</a>
     <% } else { %>
         <a href="/login" class="nav-log">Se connecter</a>
     <% } %>

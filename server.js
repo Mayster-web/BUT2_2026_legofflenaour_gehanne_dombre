@@ -135,6 +135,17 @@ app.post('/admin/agents', exigerAdmin, (req, res) => {
     res.redirect('/admin');
 });
 
+app.post('/compte/edit', (req, res) => {
+    const motDePasseHash = createHash('sha256').update(password).digest('hex');
+    db.prepare(`
+        INSERT INTO utilisateur (login, password, nom, prenom, ddn, email, type_utilisateur)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(login, motDePasseHash, nom, prenom, ddn, email, 'agent');
+
+    res.redirect('/compte');
+});
+
+
 app.post('/admin/agents/:id/supprimer', exigerAdmin, (req, res) => {
     const agent = db.prepare("SELECT id FROM utilisateur WHERE id = ? AND type_utilisateur = 'agent'").get(req.params.id);
     if (!agent) return res.status(404).render('erreur404');
@@ -253,6 +264,10 @@ app.post('/location/:id/annuler', exigerConnexion, (req, res) => {
 
 app.get('/contact', (req, res) => {
     res.render('contact');
+});
+
+app.get('/compte', (req, res) => {
+    res.render('compte', { erreur: null });
 });
 
 // Page détail produit

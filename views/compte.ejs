@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+    <%- include('partials/nav') %>
+
+        <div class="manager-page">
+            <h1>Mon compte</h1>
+
+            <% if (erreur) { %>
+                <p class="manager-error" role="alert">
+                    <%= erreur %>
+                </p>
+                <% } %>
+
+                    <section class="manager-section" aria-labelledby="ajout-agent-heading">
+                        <h2 id="ajout-agent-heading">Ajouter un agent</h2>
+                        <form class="manager-form" method="POST" action="/admin/agents">
+                            <label>
+                                Identifiant *
+                                <input type="text" name="login" required>
+                            </label>
+                            <label>
+                                Mot de passe *
+                                <input type="password" name="password" required>
+                            </label>
+                            <label>
+                                Prénom *
+                                <input type="text" name="prenom" required>
+                            </label>
+                            <label>
+                                Nom *
+                                <input type="text" name="nom" required>
+                            </label>
+                            <label>
+                                Date de naissance *
+                                <input type="date" name="ddn" required>
+                            </label>
+                            <label>
+                                E-mail *
+                                <input type="email" name="email" required>
+                            </label>
+                            <button class="manager-submit" type="submit">Ajouter l'agent</button>
+                        </form>
+
+                    </section>
+                    <button href="/logout" class="logout">Se déconnecter</button>
+        </div>
+
+        <%- include('partials/footer') %>
