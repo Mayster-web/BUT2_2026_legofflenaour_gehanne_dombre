@@ -1,91 +1,170 @@
 <%- include('partials/header') %>
 
-<%- include('partials/nav') %>
+    <%- include('partials/nav') %>
 
-<div class="manager-page">
-    <h1>Gestion des produits</h1>
+        <div class="manager-page">
+            <h1>Gestion des produits</h1>
 
-    <% if (erreur) { %>
-        <p class="manager-error" role="alert"><%= erreur %></p>
-    <% } %>
+            <% if (erreur) { %>
+                <p class="manager-error" role="alert">
+                    <%= erreur %>
+                </p>
+                <% } %>
+                    <!-- Liste des produits -->
+                    <section class="manager-section" aria-labelledby="products-heading">
+                        <h2 id="products-heading">Tous les produits</h2>
+                        <% if (produits.length===0) { %>
+                            <p>Aucun produit n'est enregistré.</p>
+                            <% } else { %>
+                                <div class="manager-table-wrapper">
+                                    <table class="manager-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Marque</th>
+                                                <th scope="col">Modèle</th>
+                                                <th scope="col">Prix / jour</th>
+                                                <th scope="col">État</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (const produit of produits) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= produit.id %>
+                                                    </td>
+                                                    <td>
+                                                        <%= produit.type %>
+                                                    </td>
+                                                    <td>
+                                                        <%= produit.marque %>
+                                                    </td>
+                                                    <td>
+                                                        <%= produit.modele %>
+                                                    </td>
+                                                    <td>
+                                                        <%= produit.prix_location %> €
+                                                    </td>
+                                                    <td>
+                                                        <%= produit.etat %>
+                                                    </td>
+                                                    <td>
+                                                        <form method="POST"
+                                                            action="/agent/produits/<%= produit.id %>/supprimer">
+                                                            <button class="manager-delete" type="submit"
+                                                                aria-label="Supprimer <%= produit.marque %> <%= produit.modele %>">
+                                                                Supprimer
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <% } %>
+                    </section>
 
-    <section class="manager-section" aria-labelledby="products-heading">
-        <h2 id="products-heading">Tous les produits</h2>
-        <% if (produits.length === 0) { %>
-            <p>Aucun produit n'est enregistré.</p>
-        <% } else { %>
-            <div class="manager-table-wrapper">
-                <table class="manager-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Marque</th>
-                            <th scope="col">Modèle</th>
-                            <th scope="col">Prix / jour</th>
-                            <th scope="col">État</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for (const produit of produits) { %>
-                            <tr>
-                                <td><%= produit.id %></td>
-                                <td><%= produit.type %></td>
-                                <td><%= produit.marque %></td>
-                                <td><%= produit.modele %></td>
-                                <td><%= produit.prix_location %> €</td>
-                                <td><%= produit.etat %></td>
-                                <td>
-                                    <form method="POST" action="/agent/produits/<%= produit.id %>/supprimer">
-                                        <button class="manager-delete" type="submit"
-                                            aria-label="Supprimer <%= produit.marque %> <%= produit.modele %>">
-                                            Supprimer
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-            </div>
-        <% } %>
-    </section>
+                    <!-- Nouveaux produit -->
+                    <section class="manager-section" aria-labelledby="add-product-heading">
+                        <h2 id="add-product-heading">Ajouter un produit</h2>
+                        <form class="manager-form" method="POST" action="/agent/produits">
+                            <label>
+                                Type *
+                                <input type="text" name="type" required>
+                            </label>
+                            <label>
+                                Marque *
+                                <input type="text" name="marque" required>
+                            </label>
+                            <label>
+                                Modèle *
+                                <input type="text" name="modele" required>
+                            </label>
+                            <label>
+                                Prix de location par jour (€) *
+                                <input type="number" name="prix_location" min="0" step="0.01" required>
+                            </label>
+                            <label>
+                                État *
+                                <input type="text" name="etat" required>
+                            </label>
+                            <label>
+                                Nom du fichier image
+                                <input type="text" name="image" placeholder="exemple.jpg">
+                            </label>
+                            <label class="manager-description">
+                                Description
+                                <textarea name="description" rows="4"></textarea>
+                            </label>
+                            <button class="manager-submit" type="submit">Ajouter le produit</button>
+                        </form>
+                    </section>
 
-    <section class="manager-section" aria-labelledby="add-product-heading">
-        <h2 id="add-product-heading">Ajouter un produit</h2>
-        <form class="manager-form" method="POST" action="/agent/produits">
-            <label>
-                Type *
-                <input type="text" name="type" required>
-            </label>
-            <label>
-                Marque *
-                <input type="text" name="marque" required>
-            </label>
-            <label>
-                Modèle *
-                <input type="text" name="modele" required>
-            </label>
-            <label>
-                Prix de location par jour (€) *
-                <input type="number" name="prix_location" min="0" step="0.01" required>
-            </label>
-            <label>
-                État *
-                <input type="text" name="etat" required>
-            </label>
-            <label>
-                Nom du fichier image
-                <input type="text" name="image" placeholder="exemple.jpg">
-            </label>
-            <label class="manager-description">
-                Description
-                <textarea name="description" rows="4"></textarea>
-            </label>
-            <button class="manager-submit" type="submit">Ajouter le produit</button>
-        </form>
-    </section>
-</div>
+                    <!-- Les locations -->
+                    <section class="manager-section" aria-labelledby="products-heading">
+                        <h2 id="products-heading">Toutes les réservations</h2>
+                        <% if (locations.length===0) { %>
+                            <p>Aucun produit n'a etait réserver.</p>
+                            <% } else { %>
+                                <div class="manager-table-wrapper">
+                                    <table class="manager-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Date de début</th>
+                                                <th scope="col">Date de retour prévue</th>
+                                                <th scope="col">Date de retour effective</th>
+                                                <th scope="col">Prix total</th>
+                                                <th scope="col">Client</th>
+                                                <th scope="col">Produit</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (const location of locations) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= location.location_id %>
+                                                    </td>
+                                                    <td>
+                                                        <%= location.date_debut %>
+                                                    </td>
+                                                    <td>
+                                                        <%= location.date_retour_prevue %>
+                                                    </td>
+                                                    <td>
+                                                        <%= location.date_retour_effective %>
+                                                    </td>
+                                                    <td>
+                                                        <%= location.prix_total %> €
+                                                    </td>
+                                                    <td>
+                                                        <%= location.prenom %>
+                                                            <%= location.nom %>
+                                                    </td>
+                                                    <td>
+                                                        <%= location.type %>
+                                                            <%= location.modele %>
+                                                    </td>
+                                                    <td>
+                                                        <form method="POST"
+                                                            action="/agent/produits/<%= location.id %>/supprimer">
+                                                            <button class="manager-payment" type="submit"
+                                                                aria-label="Supprimer <%= location.nom %> <%= location.prenom %>">
+                                                                Comfirmer paiement et retour
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <% } %>
+                    </section>
+        </div>
 
-<%- include('partials/footer') %>
+        <%- include('partials/footer') %>

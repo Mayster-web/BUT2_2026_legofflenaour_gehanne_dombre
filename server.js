@@ -165,7 +165,8 @@ app.post('/admin/agents/:id/supprimer', exigerAdmin, (req, res) => {
 
 app.get('/agent', exigerAgent, (req, res) => {
     const produits = db.prepare('SELECT * FROM produit ORDER BY id').all();
-    res.render('agent', { produits, erreur: null });
+    const locations = db.prepare('SELECT *, location.id AS location_id, produit.id AS produit_id, utilisateur.id AS utilisateur_id, location.date_debut, location.date_retour_prevue, location.prix_total FROM location JOIN utilisateur ON utilisateur.id = location.utilisateur_id JOIN produit ON produit.id = location.produit_id ORDER BY location.id;').all();
+    res.render('agent', { produits, locations, erreur: null });
 });
 
 app.post('/agent/produits', exigerAgent, (req, res) => {
@@ -202,8 +203,6 @@ app.post('/agent/produits/:id/supprimer', exigerAgent, (req, res) => {
     db.prepare('DELETE FROM produit WHERE id = ?').run(req.params.id);
     res.redirect('/agent');
 });
-
-
 
 app.get('/louer/:id', exigerConnexion, (req, res) => {
     const produit = db.prepare('SELECT * FROM produit WHERE id = ?').get(req.params.id);

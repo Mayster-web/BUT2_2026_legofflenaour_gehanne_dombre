@@ -647,6 +647,22 @@ footer p {
     background: #8f1c13;
 }
 
+.manager-payment,
+.manager-submit {
+    padding: 0.4rem 0rem;
+    border-radius: 0.5rem;
+    color: white;
+    font: inherit;
+}
+
+.manager-payment {
+    background: #28b418;
+}
+
+.manager-payment:hover {
+    background: #368f13;
+}
+
 .manager-form {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
